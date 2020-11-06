@@ -1,0 +1,195 @@
+
+---
+title: "Mapping Swiss German dialects"
+---
+<h1>Loading libraries</h1>
+```{r message=FALSE}
+library(tmap)
+library(sf)
+library(pophelper)
+library(dplyr)
+library(RColorBrewer)
+
+```
+
+
+<h1>Reading data </h1>
+
+<h3>Read combined results with CLUMPP and merge them</h3>
+```{r message=FALSE}
+#Read clumpp results
+
+K5 <- readQ("../../Results/CLUMPP_output/pop_K5-combined-merged.txt")
+
+#Merging results of 6 populations
+merged_data <- mergeQ(K5)[[1]]
+
+#Import coordinates
+coord<-read.table('../coordinates_wgs84.txt',header = T)
+
+#Spatialize results
+k5_results<-cbind(coord,merged_data)
+
+#Convert data to sf format
+point_data<-st_as_sf(k5_results, coords = c("X_1", "Y_1"), crs = 4326)
+```
+
+<h3>Read municipalities' shapefile</h3>
+```{r message=FALSE}
+
+municipalities <- st_read(
+  "../../shapefiles/municipalities_voronoi.shp")
+
+municipalities$id <- 1:nrow(municipalities)
+```
+
+
+
+<h1>Results</h1>
+
+<h3>Population 1 <h3>
+```{r message=FALSE}
+
+
+mypaletTESS<-c("#6A3D9A", #purple
+               "#FF7F00",
+               "#33A02C",
+               "#1F78B4", #blue
+               "#E31A1C")
+
+
+palette <-colorRampPalette(c("white", "#6A3D9A"))
+
+population_1_aggregated = municipalities %>%
+  st_join(point_data[,c('Cluster1','geometry')]) %>%
+  group_by(id) %>%
+  summarize(Cluster1 = mean(Cluster1, na.rm = TRUE))
+
+tmap_mode("view")
+tm_shape(population_1_aggregated) +
+tm_polygons("Cluster1", palette = palette(15),breaks = c(0, 0.1, 0.2,0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+) +
+   tm_layout(frame = F, main.title = "Admixture proportions",legend.outside = T)
+
+
+
+```
+
+
+<h1>Results</h1>
+
+<h3>Population 2 <h3>
+```{r message=FALSE}
+
+
+mypaletTESS<-c("#6A3D9A", #purple
+               "#FF7F00",
+               "#33A02C",
+               "#1F78B4", #blue
+               "#E31A1C")
+
+
+palette <-colorRampPalette(c("white", "#FF7F00"))
+
+population_2_aggregated = municipalities %>%
+  st_join(point_data[,c('Cluster2','geometry')]) %>%
+  group_by(id) %>%
+  summarize(Cluster2 = mean(Cluster2, na.rm = TRUE))
+
+tmap_mode("view")
+tm_shape(population_2_aggregated) +
+tm_polygons("Cluster2", palette = palette(15), breaks = c(0, 0.1, 0.2,0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+) +
+   tm_layout(frame = F, main.title = "Admixture proportions",legend.outside = T)
+
+
+
+```
+
+<h3>Population 3 <h3>
+```{r message=FALSE}
+
+
+mypaletTESS<-c("#6A3D9A", #purple
+               "#FF7F00",
+               "#33A02C",
+               "#1F78B4", #blue
+               "#E31A1C")
+
+
+palette <-colorRampPalette(c("white", "#33A02C"))
+
+population_3_aggregated = municipalities %>%
+  st_join(point_data[,c('Cluster3','geometry')]) %>%
+  group_by(id) %>%
+  summarize(Cluster3 = mean(Cluster3, na.rm = TRUE))
+
+tmap_mode("view")
+tm_shape(population_3_aggregated) +
+tm_polygons("Cluster3", palette = palette(15), breaks = c(0, 0.1, 0.2,0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+) +
+   tm_layout(frame = F, main.title = "Admixture proportions",legend.outside = T)
+
+
+
+```
+
+
+
+<h3>Population 4 <h3>
+```{r message=FALSE}
+
+
+mypaletTESS<-c("#6A3D9A", #purple
+               "#FF7F00",
+               "#33A02C",
+               "#1F78B4", #blue
+               "#E31A1C")
+
+
+palette <-colorRampPalette(c("white", "#1F78B4"))
+
+population_4_aggregated = municipalities %>%
+  st_join(point_data[,c('Cluster4','geometry')]) %>%
+  group_by(id) %>%
+  summarize(Cluster4 = mean(Cluster4, na.rm = TRUE))
+
+tmap_mode("view")
+tm_shape(population_4_aggregated) +
+tm_polygons("Cluster4", palette = palette(15), breaks = c(0, 0.1, 0.2,0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+) +
+   tm_layout(frame = F, main.title = "Admixture proportions",legend.outside = T)
+
+```
+
+
+<h3>Population 5 <h3>
+```{r message=FALSE}
+
+
+mypaletTESS<-c("#6A3D9A", #purple
+               "#FF7F00",
+               "#33A02C",
+               "#1F78B4", #blue
+               "#E31A1C")
+
+
+palette <-colorRampPalette(c("white", "#E31A1C"))
+
+population_5_aggregated = municipalities %>%
+  st_join(point_data[,c('Cluster5','geometry')]) %>%
+  group_by(id) %>%
+  summarize(Cluster5 = mean(Cluster5, na.rm = TRUE))
+
+tmap_mode("view")
+tm_shape(population_5_aggregated) +
+tm_polygons("Cluster5", palette = palette(15), breaks = c(0, 0.1, 0.2,0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+) +
+   tm_layout(frame = F, main.title = "Admixture proportions",legend.outside = T)
+
+```
+
+
+
+
+

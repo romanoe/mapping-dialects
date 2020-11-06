@@ -7,7 +7,6 @@ navbar:
         href: index.html
       - text: "All data results"
         href: all_data.html
-
 output:
    html_document:
      toc: true
