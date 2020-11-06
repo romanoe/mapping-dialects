@@ -1,0 +1,29 @@
+---
+title: "Results with all data"
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'all_data.html'))})
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<h1>Results with all data (211 variables)</h1>
+
+<h3>Western population</h3>
+![](../../../Western-pop.png)
+
+<h3>Central population</h3>
+![](../../../Central_pop.png)
+
+<h3>Walser population</h3>
+![](../../../Walser-pop.png)
+
+<h3>Western population</h3>
+![](../../../East-pop.png)
+
+<h3>Ground population</h3>
+![](../../../Ground-pop.png)

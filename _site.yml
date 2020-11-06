@@ -1,0 +1,15 @@
+name: "Mapping dialects"
+output_dir: docs
+navbar:
+  title: "Mapping dialects"
+  left:
+      - text: "K=6"
+        href: index.html
+      - text: "All data results"
+        href: all_data.html
+
+output:
+   html_document:
+     toc: true
+     toc_float: true
+     theme: cosmo
