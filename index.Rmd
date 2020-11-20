@@ -17,7 +17,6 @@ library(RColorBrewer)
 
 ```
 
-
 <h1>Reading data </h1>
 
 <h2>Read combined results with CLUMPP and merge them</h2>
