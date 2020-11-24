@@ -1,5 +1,5 @@
 ---
-title: "Results with all data"
+title: "Tess results with full dataset"
 knit: (function(input_file, encoding) {
   out_dir <- 'docs';
   rmarkdown::render(input_file,
@@ -11,19 +11,23 @@ knit: (function(input_file, encoding) {
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<h1>Results with all data (211 variables)</h1>
 
-<h3>Western population</h3>
+These results have been obtained with the Admixture model of TESS using the full dataset (correlated features not removed) of the Syntactic Atlas of Swiss German (SADS). 
+
+<h4>Western population</h4>
 ![](../../../Western-pop.png)
 
-<h3>Central population</h3>
+<h4>Central population</h3>
 ![](../../../Central_pop.png)
 
-<h3>Walser population</h3>
+<h4>Walser population</h4>
 ![](../../../Walser-pop.png)
 
-<h3>Western population</h3>
+<h4Western population</h4>
 ![](../../../East-pop.png)
 
-<h3>Ground population</h3>
+<h4>Ground population</h4>
 ![](../../../Ground-pop.png)
+
+
+

@@ -7,7 +7,12 @@ knit: (function(input_file, encoding) {
  output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
 ---
 
-<h1>Loading libraries</h1>
+This website contains some of the results from TESS analysis using data of the Syntactic Atlas of Swiss German (SADS). These results provide supporting information for the main article _Linguistic traits as heritable units? Spatial Bayesian clustering reveals Swiss German dialect regions_. 
+
+<h2>Tess results with $K = 6$</h2>
+These results have been obtained with the Admixture model of TESS using the least correlated syntactic phenomena of the Syntactic Atlas of Swiss German (SADS). Choosing 6 populations ($K=6$), we obtain the following results. 
+
+<h3>Loading libraries</h3>
 ```{r message=FALSE}
 library(tmap)
 library(sf)
@@ -17,9 +22,10 @@ library(RColorBrewer)
 
 ```
 
-<h1>Reading data </h1>
 
-<h2>Read combined results with CLUMPP and merge them</h2>
+<h3>Reading data </h3>
+
+<h4>Read combined results with CLUMPP and merge them</h4>
 ```{r message=FALSE}
 #Read clumpp results
 K6 <- readQ("../../Results/CLUMPP_output/pop_K6-combined-merged.txt")
@@ -46,8 +52,8 @@ municipalities$id <- 1:nrow(municipalities)
 ```
 
 
-<h1>Results</h1>
-<h2>Population 1 </h2>
+<h3>Results</h3>
+<h4>Population 1 </h4>
 ```{r message=FALSE}
 
 mypaletTESS<-c("#1F78B4","#33A02C","#E31A1C","#FF7F00","#6A3D9A",'deeppink1')
@@ -68,7 +74,7 @@ tm_polygons("Cluster1", palette = palette(15), breaks = c(0, 0.1, 0.2,0.3, 0.4, 
  
 ```
 
-<h2>Population 2 </h2>
+<h4>Population 2 </h4>
 ```{r message=FALSE}
 
 
@@ -85,7 +91,7 @@ tm_polygons("Cluster2", palette = palette(15), breaks = c(0, 0.1, 0.2,0.3, 0.4, 
 ) 
 ```
 
-<h2>Population 3 </h2>
+<h4>Population 3 </h4>
 ```{r message=FALSE}
 
 
@@ -105,7 +111,7 @@ tm_polygons("Cluster3", palette = palette(15), breaks = c(0, 0.1, 0.2,0.3, 0.4, 
 
 
 
-<h2>Population 4 </h2>
+<h4>Population 4 </h4>
 ```{r message=FALSE}
 
 palette <-colorRampPalette(c("white", mypaletTESS[3]))
@@ -124,7 +130,7 @@ tm_polygons("Cluster4", palette = palette(15), breaks = c(0, 0.1, 0.2,0.3, 0.4, 
 ```
 
 
-<h2>Population 5 </h2>
+<h4>Population 5 </h4>
 ```{r message=FALSE}
 
 
@@ -145,7 +151,7 @@ tm_polygons("Cluster5", palette = palette(15), breaks = c(0, 0.1, 0.2,0.3, 0.4, 
 
 
 
-<h2>Population 6 </h2>
+<h4>Population 6 </h4>
 ```{r message=FALSE}
 
 palette <-colorRampPalette(c("white", mypaletTESS[1]))
@@ -162,3 +168,4 @@ tm_polygons("Cluster6", palette = palette(15), breaks = c(0, 0.1, 0.2,0.3, 0.4, 
    tm_layout(frame = F, main.title = "Admixture proportions",legend.outside = T)
 
 ```
+

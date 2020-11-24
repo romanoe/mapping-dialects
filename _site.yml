@@ -1,14 +1,15 @@
-name: "Mapping dialects"
+name: "Mapping Swiss German dialects"
 output_dir: docs
 navbar:
-  title: "Mapping dialects"
+  title: "Mapping Swiss German dialects"
   left:
-      - text: "K=6"
+      - text: "K = 6"
         href: index.html
-      - text: "All data results"
+      - text: "Full dataset results"
         href: all_data.html
 output:
    html_document:
      toc: true
+     toc_depth: 4
      toc_float: true
      theme: cosmo

@@ -1,0 +1,198 @@
+---
+title: "Linguistic traits as heritable units? Spatial Bayesian clustering reveals Swiss German dialect regions"
+subtitle: 'Supplementary materials'
+output: 
+  pdf_document:
+        fig_width: 7
+        fig_height: 6
+        toc: true
+        latex_engine: xelatex
+
+author:
+  - Noemi Romano^[Laboratory of Geographic Information Systems (LASIG), School of Architecture,Civil and Environmental Engineering (ENAC), EPFL, Lausanne, Switzerland, +41 21 693 57 87, Route Cantonale Station 18 CH-1015 Lausanne]
+  - Sandro Bachmann^[German Department, University of Zurich (UZH), Zurich, Switzerland]
+  - Peter Ranacher^[Language and Space, University of Zurich (UZH), Zurich, Switzerland & Department of Geography, University of Zurich (UZH), Zurich, Switzerland]
+  - Stéphane Joost^[Laboratory of Geographic Information Systems (LASIG), School of Architecture,Civil and Environmental Engineering (ENAC), EPFL, Lausanne, Switzerland, +41 21 693 57 87, Route Cantonale Station 18 CH-1015 Lausanne]
+urlcolor: blue
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This document provides supporting information for the main article _Linguistic traits as heritable units? Spatial Bayesian clustering reveals Swiss German dialect regions_. 
+
+This document contains some of the results from TESS analysis using data of the Syntactic Atlas of Swiss German (SADS).
+
+* For results with full dataset (correlated features not removed), please visit: [Raw results](https://github.com/romanoe/mapping-dialects/tree/master/TESS)
+
+* To explore the interactive maps choosing 6 populations, please visit:  [Mapping Swiss German dialects](https://www.noemiromano.ch) 
+
+* For full dataset (correlated features not removed), please visit: [Raw data](https://github.com/romanoe/mapping-dialects/tree/master/Raw%20data)
+
+\newpage
+  
+
+# Results with 6 populations
+These results have been obtained with the Admixture model of TESS using the least correlated syntactic phenomena of the Syntactic Atlas of Swiss German (SADS). Choosing 6 populations (K=6), we obtain the following results. 
+
+## Loading libraries
+```{r message=FALSE}
+library(tmap)
+library(sf)
+library(pophelper)
+library(dplyr)
+library(RColorBrewer)
+
+```
+
+
+
+## Reading data 
+
+Read combined results with CLUMPP and merge them
+```{r message=FALSE}
+#Read clumpp results
+K6 <- readQ("../../../Results/CLUMPP_output/pop_K6-combined-merged.txt")
+
+#Merging results of 6 populations
+merged_data <- mergeQ(K6)[[1]]
+
+#Import coordinates
+coord<-read.table('../../coordinates_wgs84.txt',header = T)
+
+#Spatialize results
+k6_results<-cbind(coord,merged_data)
+
+#Convert data to sf format
+point_data<-st_as_sf(k6_results, coords = c("X_1", "Y_1"), crs = 4326)
+
+#Read municipalities
+municipalities <- st_read("../../../shapefiles/municipalities_voronoi.shp")
+
+#Create ID in municipalities
+municipalities$id <- 1:nrow(municipalities)
+
+```
+
+\newpage
+## Results
+### Population 1 
+```{r message=FALSE}
+#Defining my palet of colors
+mypaletTESS<-c("#1F78B4","#33A02C","#E31A1C","#FF7F00","#6A3D9A",'deeppink1')
+palette <-colorRampPalette(c("white", mypaletTESS[6]))
+
+#Defining breaks
+breaks <- c(0, 0.1, 0.2,0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+
+population_1_aggregated = municipalities %>%
+  st_join(point_data[,c('Cluster1','geometry')]) %>%
+  group_by(id) %>%
+  summarize(Cluster1 = mean(Cluster1, na.rm = TRUE))
+
+tmap_mode("view")
+tm_shape(population_1_aggregated) +
+tm_polygons("Cluster1", palette = palette(15), breaks = breaks) 
+```
+
+\newpage
+
+### Population 2 
+```{r message=FALSE}
+palette <-colorRampPalette(c("white", mypaletTESS[4]))
+population_2_aggregated = municipalities %>%
+  st_join(point_data[,c('Cluster2','geometry')]) %>%
+  group_by(id) %>%
+  summarize(Cluster2 = mean(Cluster2, na.rm = TRUE))
+
+tmap_mode("view")
+tm_shape(population_2_aggregated) +
+tm_polygons("Cluster2", palette = palette(15), breaks = breaks) 
+```
+\newpage
+
+### Population 3 
+```{r message=FALSE}
+palette <-colorRampPalette(c("white", mypaletTESS[5]))
+
+population_3_aggregated = municipalities %>%
+  st_join(point_data[,c('Cluster3','geometry')]) %>%
+  group_by(id) %>%
+  summarize(Cluster3 = mean(Cluster3, na.rm = TRUE))
+
+tmap_mode("view")
+tm_shape(population_3_aggregated) +
+tm_polygons("Cluster3", palette = palette(15), breaks = breaks) 
+```
+
+\newpage
+
+### Population 4 
+```{r message=FALSE}
+palette <-colorRampPalette(c("white", mypaletTESS[3]))
+
+population_4_aggregated = municipalities %>%
+  st_join(point_data[,c('Cluster4','geometry')]) %>%
+  group_by(id) %>%
+  summarize(Cluster4 = mean(Cluster4, na.rm = TRUE))
+
+tmap_mode("view")
+tm_shape(population_4_aggregated) +
+tm_polygons("Cluster4", palette = palette(15), breaks = breaks) 
+```
+
+\newpage
+  
+### Population 5 
+```{r message=FALSE}
+palette <-colorRampPalette(c("white", mypaletTESS[2]))
+
+population_5_aggregated = municipalities %>%
+  st_join(point_data[,c('Cluster5','geometry')]) %>%
+  group_by(id) %>%
+  summarize(Cluster5 = mean(Cluster5, na.rm = TRUE))
+
+tmap_mode("view")
+tm_shape(population_5_aggregated) +
+tm_polygons("Cluster5", palette = palette(15), breaks = breaks) 
+```
+
+\newpage
+
+### Population 6 
+```{r message=FALSE}
+palette <-colorRampPalette(c("white", mypaletTESS[1]))
+
+population_6_aggregated = municipalities %>%
+  st_join(point_data[,c('Cluster6','geometry')]) %>%
+  group_by(id) %>%
+  summarize(Cluster6 = mean(Cluster6, na.rm = TRUE))
+
+tmap_mode("view")
+tm_shape(population_6_aggregated) +
+tm_polygons("Cluster6", palette = palette(15), breaks = breaks)
+```
+
+\newpage
+
+# Results with raw data
+
+These results have been obtained with the Admixture model of TESS using the full dataset (correlated features not removed) of the Syntactic Atlas of Swiss German (SADS). 
+
+## Bern population
+![](../../../../Western-pop.png){#id .class width=70% height=70%}
+
+## Central population
+![](../../../../Central_pop.png){#id .class width=70% height=70%}
+
+
+## Walser population
+![](../../../../Walser-pop.png){#id .class width=70% height=70%}
+
+## Eastern population
+![](../../../../East-pop.png){#id .class width=70% height=70%}
+
+## Ground population
+![](../../../../Ground-pop.png){#id .class width=70% height=70%}
